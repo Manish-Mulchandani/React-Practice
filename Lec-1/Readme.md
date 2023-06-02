@@ -28,3 +28,9 @@ Whereas Production one is optimized for production. Removes dev tools, warning a
 ### Q.8 -> Async and Defer
 Async and Defer are used in Script tags. In async, script is downloaded while HTML parsing continues. Once it is downloaded, it will be executed immediately without waiting for HTML parsing to finish leading to out of order script execution.
 Whereas in Defer, script is downloaded while HTML parsing continues, but it waits for HTML to complete before executing the script. By which, it maintains the order.
+
+### Q.9 Hoisting in JS  
+Hoisting is a behavior in which functions and variables are declared on top of their containing scope. It doesn't move the code itself, just a conceptual way
+
+### Q.10 Do anonymous function run at the same time they are declared ?
+Most time anonymous functions are assigned to a variable or a function, it is just stored, only when we call the function or variable, it runs.
