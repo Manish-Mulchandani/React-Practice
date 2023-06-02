@@ -1,0 +1,1 @@
+This is my submissions for all the assignments in the Namaste React Course
