@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import RestaurantCard from "./RestaurantCard"
 
-{/*const restaurantList = [
+{
+  /*const restaurantList = [
   {
     "type": "restaurant",
     "data": {
@@ -331,35 +333,68 @@ import React from "react";
     },
     "subtype": "basic"
   },
-];*/}
-
-async function getRestaurants () {
-  const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7195687&lng=75.8577258&page_type=DESKTOP_WEB_LISTING")
-  const json = await data.json()
-  console.log(json)
+];*/
 }
 
-const RestaurantCard = (props) => {
-  
-  return (
-    <div className="m-2 p-2 d-flex flex-column align-items-center border border-primary abcde">
-      {/*<img className="pb-2" src={props.image} alt={props.name} />
-      <h3>{props.name}</h3>
-      <h5 className="text max-width-60">{props.type.join(", ")}</h5>
-  <h5>{props.distance}</h5>*/}
-    </div>
-  );
-};
-
 const Body = () => {
-  getRestaurants()
+
+  const [restaurantList, setRestaurantList] = useState([]);
+  const [allRestaurant, setAllRestaurant] = useState([]);
+  const [search, setSearch] = useState("")
+
+  const filterRestaurants = () => {
+    const filteredRest = allRestaurant.filter(rstrt => rstrt.data.name.includes(search))    
+    setRestaurantList(filteredRest)
+  }
+
+  async function getRestaurants() {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7195687&lng=75.8577258&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    setRestaurantList(json.data.cards[2].data.data.cards);
+    setAllRestaurant(json.data.cards[2].data.data.cards)
+  }
+
+  
+  useEffect(() => {
+    getRestaurants();
+    
+    //console.log(restaurantList)
+  }, []);
+  //console.log(1)
   return (
-    <div className="d-flex flex-wrap ">
-      {/*{restaurantList.map((item) => (
-        <RestaurantCard className="box" name={item.data.name} image={"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_280,h_200,c_fill/"+item.data.cloudinaryImageId} type={item.data.cuisines} distance={"Distance: "+Math.round(item.data.lastMileTravel)+" km"}/>
-      ))}*/}
-      
-    </div>
+    <>
+      <input
+        className="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button className="btn btn-outline-success" onClick={filterRestaurants}>
+              Search
+            </button>
+
+      <div className="d-flex flex-wrap ">
+        {restaurantList.map((item, index) => (
+          <RestaurantCard
+            className="box"
+            key={index}
+            name={item.data.name}
+            image={
+              "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_280,h_200,c_fill/" +
+              item.data.cloudinaryImageId
+            }
+            type={item.data.cuisines}
+            distance={
+              "Distance: " + Math.round(item.data.lastMileTravel) + " km"
+            }
+          />
+        ))}
+      </div>
+    </>
   );
 };
 

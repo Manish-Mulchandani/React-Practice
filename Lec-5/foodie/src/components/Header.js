@@ -1,6 +1,9 @@
 import React from "react";
 
 const Header = () => {
+
+  //const [search,setSearch] = useState("")
+
   return (
     <nav
       className="navbar bg-dark border-bottom border-bottom-dark navbar navbar-expand-lg bg-body-tertiary"
@@ -22,17 +25,7 @@ const Header = () => {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a className="nav-link" href="/">
